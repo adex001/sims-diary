@@ -1,0 +1,35 @@
+{
+  "name": "sims-diary",
+  "version": "1.0.0",
+  "description": "A simulated diary for team collaboration",
+  "main": "app.js",
+  "scripts": {
+    "start": "babel-node ./server/app.js",
+    "start:dev": "nodemon ./server/app.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adex001/sims-diary.git"
+  },
+  "keywords": [
+    "diary"
+  ],
+  "author": "Olatunbosun Adeoye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adex001/sims-diary/issues"
+  },
+  "homepage": "https://github.com/adex001/sims-diary#readme",
+  "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
