@@ -12,7 +12,7 @@ entriesRouter.use(TokenHandler.verifyToken);
 entriesRouter.use(trim);
 
 // Create entry route
-
+entriesRouter.post('/', EntriesController.createDiary);
 
 // Modify entry route
 entriesRouter.put('/:entryId', EntriesController.updateDiary);
