@@ -1,6 +1,11 @@
 import { Op } from "sequelize";
+import debuggerconsole from 'debug';
 import models from "../models";
 import TokenHandler from "../utilities/tokenhandler";
+import verifyPassword from "../utilities/verifyPassword";
+import getUserObject from '../utilities/getUserObject';
+
+const mydebugger = debuggerconsole('app:startup');
 
 class AuthController {
   static async signup(req, res) {
@@ -36,5 +41,34 @@ class AuthController {
       });
     });
   }
+
+  static async login(req, res) {
+    const { email, password } = req.body;
+
+    try {
+      const tryLogUser = await models.Users.findOne({ where: { email } });
+
+      if (!tryLogUser)
+        return res.status(400).json({ error: "Invalid Login Details" });
+
+      const isPasswordValid = await verifyPassword(
+        password,
+        tryLogUser.password
+      );
+
+      if (!isPasswordValid)
+        return res.status(400).json({ error: "Invalid Login Details" });
+
+      const token = await TokenHandler.createToken({
+        userId: tryLogUser.id
+      });
+
+      const user = getUserObject(tryLogUser.get());
+      return res.status(200).json({ user, token });
+    } catch (e) {
+      mydebugger(e);
+    }
+    }
 }
+
 export default AuthController;

@@ -27,10 +27,14 @@ class EntriesController {
   static async updateDiary(req, res) {
     let { story } = req.body;
     const { entryId } = req.params;
-    req.body.entryId = entryId;
 
     const error = entryValidator.createEntry(req.body);
     if (error) return response.errorResponse(res, 400, error);
+
+    // Check if the parameter is a number
+    if (isNaN(entryId)) {
+      return response.errorResponse(res, 400, "Diary ID should be a number");
+    }
 
     try {
       const entry = await models.Entries.findByPk(entryId);
@@ -56,7 +60,7 @@ class EntriesController {
         return response.errorResponse(res, 404, "Diary does not exist");
       }
     } catch (error) {
-      return response.errorResponse(res, 500, error);
+      return response.errorResponse(res, 500, "Internal Server Error");
     }
   }
 }
