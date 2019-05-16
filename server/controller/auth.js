@@ -1,8 +1,11 @@
 import { Op } from "sequelize";
+import debuggerconsole from 'debug';
 import models from "../models";
 import TokenHandler from "../utilities/tokenhandler";
 import verifyPassword from "../utilities/verifyPassword";
 import getUserObject from '../utilities/getUserObject';
+
+const mydebugger = debuggerconsole('app:startup');
 
 class AuthController {
   static async signup(req, res) {
