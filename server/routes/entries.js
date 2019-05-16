@@ -17,4 +17,7 @@ entriesRouter.post("/", EntriesController.createDiary);
 // Modify entry route
 entriesRouter.put("/:entryId", EntriesController.updateDiary);
 
+// Delete entry route
+entriesRouter.delete('/:entryId', EntriesController.deleteDiary);
+
 export default entriesRouter;
