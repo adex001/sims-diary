@@ -39,17 +39,22 @@ class AuthController {
     });
   }
 
-  static login(req, res) {
+  static async login(req, res) {
     const { email, password } = req.body;
 
-    return models.Users.findOne( { where: { email } }).then(async (tryLogUser) => {
-      if (!tryLogUser) return res.status(400)
-      .json({ error: 'Invalid Login Details' });
+    try {
+      const tryLogUser = await models.Users.findOne({ where: { email } });
 
-      const isPasswordValid = await verifyPassword(password, tryLogUser.password);
+      if (!tryLogUser)
+        return res.status(400).json({ error: "Invalid Login Details" });
 
-      if (!isPasswordValid) return res.status(400)
-      .json({ error: 'Invalid Login Details' });
+      const isPasswordValid = await verifyPassword(
+        password,
+        tryLogUser.password
+      );
+
+      if (!isPasswordValid)
+        return res.status(400).json({ error: "Invalid Login Details" });
 
       const token = await TokenHandler.createToken({
         userId: tryLogUser.id
@@ -57,7 +62,9 @@ class AuthController {
 
       const user = getUserObject(tryLogUser.get());
       return res.status(200).json({ user, token });
-    });
+    } catch (e) {
+      mydebugger(e);
+    }
     }
 }
 
