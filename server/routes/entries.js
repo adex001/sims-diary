@@ -1,7 +1,8 @@
-import express from "express";
-import EntriesController from "../controller/entries";
-import TokenHandler from "../utilities/tokenhandler";
-import trim from "../utilities/trim";
+import express from 'express';
+import EntriesController from '../controller/entries';
+import TokenHandler from '../utilities/tokenhandler';
+import trim from '../utilities/trim';
+import Params from '../middlewares/params';
 
 const entriesRouter = express.Router();
 
@@ -15,7 +16,10 @@ entriesRouter.use(trim);
 entriesRouter.post("/", EntriesController.createDiary);
 
 // Modify entry route
-entriesRouter.put("/:entryId", EntriesController.updateDiary);
+entriesRouter.put('/:entryId', Params.paramValidator, EntriesController.updateDiary);
+
+// Get all entries
+entriesRouter.get('/', EntriesController.getEntries);
 
 // Delete entry route
 entriesRouter.delete('/:entryId', EntriesController.deleteDiary);

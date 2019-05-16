@@ -29,6 +29,7 @@ class AuthController {
       const token = await TokenHandler.createToken({
         userId: user.id
       });
+      
       return res.status(201).json({
         status: 201,
         data: {

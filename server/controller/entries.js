@@ -64,6 +64,23 @@ class EntriesController {
     }
   }
 
+  static async getEntries(req, res) {
+    const userId = req.decoded.userId;
+
+    try {
+      await models.Entries.findAll()
+        .then((entry) => {
+          // Check if the person that is trying to update the diary is the owner of the diary
+          if (entry[0].dataValues.ownerid !== userId) {
+            return response.errorResponse(res, 401, "You have not made any diary entry, Please make an entry and try again");
+          }
+          return response.successResponse(res, 200, entry);
+        });
+    } catch {
+      return response.errorResponse(res, 500, "Internal server error");
+    }
+  }
+
   static async deleteDiary(req, res) {
     const { entryId } = req.params;
 

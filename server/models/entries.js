@@ -21,4 +21,4 @@ export default (sequelize, DataTypes) => {
     })
   };
   return Entries;
-}; 
+};
