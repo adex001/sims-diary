@@ -13,12 +13,15 @@ entriesRouter.use(TokenHandler.verifyToken);
 entriesRouter.use(trim);
 
 // Create entry route
-entriesRouter.post('/', EntriesController.createDiary);
+entriesRouter.post("/", EntriesController.createDiary);
 
 // Modify entry route
 entriesRouter.put('/:entryId', Params.paramValidator, EntriesController.updateDiary);
 
 // Get all entries
 entriesRouter.get('/', EntriesController.getEntries);
+
+// Delete entry route
+entriesRouter.delete('/:entryId', EntriesController.deleteDiary);
 
 export default entriesRouter;

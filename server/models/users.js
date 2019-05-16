@@ -1,16 +1,13 @@
 "use strict";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const encryptPassword = async function(password) {
   const saltRound = Math.floor(Math.random() * 5);
-  const salt = await bcrypt.genSaltSync(saltRound);
-  const hashedPassword = await bcrypt.hashSync(password, salt);
+  const salt = await bcrypt.genSalt(saltRound);
+  const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 };
-const checkPassword = async function(myPassword) {
-  const data = await bcrypt.compareSync(myPassword, this.password);
-  return data;
-};
+
 
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define(
